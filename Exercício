@@ -41,10 +41,10 @@ INSERT INTO Estudantes(id, nome, curso, idade, nota, cidade)
   VALUES 
     (4001, 'Gabriel', 'Edificações', 16, 2, 'Guarabira'),
     (4002, 'Daniel', 'Informática', 17, 10, 'Cuitegi'),
-    (4003, 'Mathias', 'Edificações', 16, 8, 'Araçagi'),
+    (4003, 'Mathias', 'Edificações', 16, 8, 'Sapé'),
     (4004, 'Danilo', 'Contabilidade', 15, 9, 'Aracaju'),
     (4005, 'Roberto', 'Edificações', 19, 7, 'Guarabira'),
-    (4006, 'Cheirazard', 'Informática', 32, 4, 'Guarabira'),
+    (4006, 'Cheirazard', 'Informática', 32, 4, 'Salvador'),
     (4007, 'Beiço', 'Contabilidade', 16, 4, 'Cuitegi'),
     (4008, 'Manoel', 'Informática', 17, 6, 'Nova Cruz'),
     (4009, 'Arnaldo', 'Edificações', 18, 5, 'Buraco do Afonso'),
@@ -53,10 +53,10 @@ INSERT INTO Estudantes(id, nome, curso, idade, nota, cidade)
     (4012, 'Fulano', 'Contabilidade', 20, 1, 'Arara'),
     (4013, 'Sicrano', 'Edificações', 15, 0, 'Pilões'),
     (4014, 'Beltrano', 'Contabilidade', 16, 10, 'Aracaju'),
-    (4015, 'Coisinha', 'Informática', 17, 7, 'Pilões'),
+    (4015, 'Coisinha', 'Informática', 17, 7, 'Sapé'),
     (4016, 'Hidemi', 'Edificações', 18, 9, 'Arara'),
     (4017, 'Pedro', 'Contabilidade', 19, 8, 'Pilões'),
-    (4018, 'Bequinha', 'Edificações', 20, 9, 'Araçagi'),
+    (4018, 'Bequinha', 'Edificações', 20, 9, 'Santos'),
     (4019, 'Leirbag', 'Informática', 24, 6, 'Araçagi');
 
 SELECT * FROM Estudantes where nome like 'A%';
@@ -70,5 +70,9 @@ SELECT curso, COUNT(*) AS total_estudantes
 FROM Estudantes
 GROUP BY curso
 HAVING COUNT(*) > 5;
-  
+SELECT curso, AVG(nota) AS media
+FROM Estudantes
+WHERE cidade LIKE 'S%'
+GROUP BY curso
+HAVING AVG(nota) > 7;
   
