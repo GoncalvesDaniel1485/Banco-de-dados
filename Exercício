@@ -65,6 +65,7 @@ SELECT AVG(nota) FROM Estudantes;
 SELECT MIN(nota) FROM Estudantes;
 SELECT MAX(nota) FROM Estudantes;
 SELECT COUNT(*) FROM Estudantes;
+SELECT SUM(nota) FROM Estudantes;
 SELECT curso, COUNT(*) AS Quantidade_curso FROM Estudantes GROUP BY curso;
 SELECT curso, COUNT(*) AS Total_de_estudantes
 FROM Estudantes
