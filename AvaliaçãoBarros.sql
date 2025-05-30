@@ -41,24 +41,6 @@ VALUES
 (7, 2, 13, 137),
 (8, 3, 12, 129),
 (9, 3, 11, 420);
-/*
-Total de votos por candidato
-
-Média de votos por região:
-
-Candidatos com o maior número de votos em uma única região.
-
-
-Região com o maior número de votos:
-
-Candidato com o maior número de votos
-
-
-Candidatos com mais de 500 votos 
-
-Número de votos por região e por candidato
-
-*/
 
 SELECT candidate_name, candidate_id, SUM(vote_count) AS 'Soma dos votos por candidato' FROM votes v JOIN candidates c ON v.id_candidate = c.candidate_id
 GROUP BY candidate_id;
@@ -77,3 +59,6 @@ SELECT id_candidate, vote_count FROM votes WHERE vote_count HAVING vote_count > 
 SELECT candidate_name, region_name, vote_count FROM votes v JOIN candidates c ON v.id_candidate = c.candidate_id
 JOIN regions r ON v.id_region = r.region_id
 ORDER BY candidate_name;
+
+SELECT vote_id, vote_count FROM votes GROUP BY vote_id HAVING vote_id between 5 AND 9;
+SELECT min(vote_count), max(vote_count), AVG(vote_count), SUM(vote_count) FROM votes;
