@@ -35,4 +35,4 @@ INSERT INTO Estudantes(id, nome, curso, idade, nota, cidade)
   SELECT min(nota) FROM Estudantes;
   SELECT max(nota) FROm Estudantes;
   SELECT cidade, COUNT(*) AS "Quantidade cidade" FROM Estudantes WHERE id BETWEEN 4001 AND 4015 GROUP BY cidade HAVING COUNT(*) = 1;
-  SELECT nome, COUNT(nome) AS Quantidade, AVG(nota) AS media FROM Estudantes GROUP BY nome HAVING AVG(nota) < 1;
+  SELECT nome, COUNT(nome) AS Quantidade, AVG(nota) AS media FROM Estudantes GROUP BY nome HAVING AVG(nota) BETWEEN 2 AND 8;
