@@ -26,39 +26,136 @@ VALUES
 
 INSERT INTO regions(region_id, region_name)
 VALUES
-(11, 'PB'),
-(12, 'SP'),
-(13, 'RJ');
+(11, 'Nordeste'),
+(12, 'Sudeste'),
+(13, 'Centro_Oeste');
 
 INSERT INTO votes(vote_id, id_candidate, id_region, vote_count)
 VALUES
 (1, 1, 12, 237),
-(2, 2, 11, 409),
+(2, 2, 11, 609),
 (3, 3, 13, 202),
 (4, 1, 11, 501),
 (5, 1, 13, 69),
 (6, 2, 12, 96),
 (7, 2, 13, 137),
-(8, 3, 12, 129),
+(8, 3, 12, 850),
 (9, 3, 11, 420);
 
-SELECT candidate_name, candidate_id, SUM(vote_count) AS 'Soma dos votos por candidato' FROM votes v JOIN candidates c ON v.id_candidate = c.candidate_id
-GROUP BY candidate_id;
+/* total de voto por candidato */
+SELECT 
+    candidate_name AS 'Candidatos',
+    SUM(vote_count) AS 'Soma dos votos por candidato'
+FROM 
+    votes v JOIN candidates c ON v.id_candidate = c.candidate_id
+GROUP BY 
+    candidate_id;
 
-SELECT region_name, region_id, AVG(vote_count) AS 'Media dos votos por região' FROM votes v JOIN regions r ON v.id_region = r.region_id
-GROUP BY region_id;
+/* média de votos por região */
+SELECT 
+    region_name AS 'Nome da região',
+    AVG(vote_count) AS 'Media dos votos por região' 
+FROM 
+    votes v 
+JOIN 
+    regions r ON v.id_region = r.region_id
+GROUP BY 
+    region_id;
 
-SELECT id_candidate, id_region, vote_count FROM votes ORDER BY vote_count DESC LIMIT 3;
+/* Candidatos com o maior número de votos em uma única região */
+SELECT 
+    c.candidate_name AS 'Candidatos',
+    r.region_name AS 'Nome da Região',
+    v.vote_count AS 'Total de Votos'
+FROM 
+    votes v
+JOIN 
+    candidates c ON v.id_candidate = c.candidate_id
+JOIN 
+    regions r ON v.id_region = r.region_id
+ORDER BY 
+    v.vote_count DESC 
+LIMIT 3;
 
-SELECT id_region, MAX(vote_count) FROM votes WHERE vote_count GROUP BY id_region ORDER BY id_region LIMIT 1;
+/* Região com o maior número de votos: */
+SELECT 
+    region_name AS 'Nome da região', 
+    vote_count AS 'Qtd de votos'
+FROM 
+    votes v 
+JOIN 
+    regions r ON v.id_region = r.region_id
+WHERE 
+    v.vote_count = (SELECT MAX(vote_count) FROM votes);
+    
+/* Candidato com o maior número de votos */
+SELECT 
+    candidate_name AS 'Candidato',
+    vote_count AS 'Qtd de votos'
+FROM 
+    votes v
+JOIN
+    candidates c ON v.id_candidate = c.candidate_id
+WHERE 
+    v.vote_count = (SELECT MAX(vote_count) FROM votes);
+  
+/* Candidatos com mais de 500 votos */
+SELECT 
+    candidate_name AS 'Candidatos',
+    vote_count AS 'Qtd de votos'
+FROM 
+    votes v
+JOIN 
+    candidates c ON v.id_candidate = c.candidate_id
+WHERE 
+    v.vote_count HAVING vote_count > 500;
 
-SELECT id_candidate, id_region, vote_count FROM votes ORDER BY vote_count DESC LIMIT 1;
+/* Número de votos por região e por candidato */
+SELECT 
+    region_name AS 'Nome da região', 
+    candidate_name AS 'Candidatos', 
+    vote_count AS 'Qtd de votos'
+FROM 
+    votes v 
+JOIN 
+    candidates c ON v.id_candidate = c.candidate_id
+JOIN 
+    regions r ON v.id_region = r.region_id
+ORDER BY 
+    region_name, candidate_name;
 
-SELECT id_candidate, vote_count FROM votes WHERE vote_count HAVING vote_count > 500; 
+/* Crie mais duas consultas que façam uso das funções(min, max, AVG, etc) e do group by usando having. */
 
-SELECT candidate_name, region_name, vote_count FROM votes v JOIN candidates c ON v.id_candidate = c.candidate_id
-JOIN regions r ON v.id_region = r.region_id
-ORDER BY candidate_name;
+/* primeira consulta */
 
-SELECT vote_id, vote_count FROM votes GROUP BY vote_id HAVING vote_id between 5 AND 9;
-SELECT min(vote_count), max(vote_count), AVG(vote_count), SUM(vote_count) FROM votes;
+SELECT 
+    candidate_name AS 'Candidato',
+    region_name AS 'Região',
+    vote_count AS 'Qtd_votos',
+    vote_id
+FROM 
+    votes v
+JOIN
+    candidates c ON v.id_candidate = c.candidate_id
+JOIN 
+    regions r ON v.id_region = r.region_id
+GROUP BY
+    v.vote_id
+HAVING
+    v.vote_id between 5 and 9
+ORDER BY
+    v.vote_id ASC;
+
+/* segunda consulta */
+SELECT 
+    candidate_name AS 'Candidato',
+    MIN(v.vote_count) AS 'Mínimo',
+    MAX(v.vote_count) AS 'Máximo',
+    AVG(v.vote_count) AS 'Média',
+    SUM(v.vote_count) AS 'Total'
+FROM 
+    votes v
+INNER JOIN 
+    candidates c ON v.id_candidate = c.candidate_id
+GROUP BY 
+    c.candidate_name;
