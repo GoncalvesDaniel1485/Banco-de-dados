@@ -64,9 +64,9 @@ GROUP BY
 
 /* Candidatos com o maior número de votos em uma única região */
 SELECT 
-    c.candidate_name AS 'Candidatos',
-    r.region_name AS 'Nome da Região',
-    v.vote_count AS 'Total de Votos'
+    candidate_name AS 'Candidatos',
+    region_name AS 'Nome da Região',
+    vote_count AS 'Total de Votos'
 FROM 
     votes v
 JOIN 
@@ -74,30 +74,33 @@ JOIN
 JOIN 
     regions r ON v.id_region = r.region_id
 ORDER BY 
-    v.vote_count DESC 
-LIMIT 3;
+    v.vote_count DESC LIMIT 3;
 
 /* Região com o maior número de votos: */
 SELECT 
     region_name AS 'Nome da região', 
-    vote_count AS 'Qtd de votos'
+    MAX(vote_count) AS 'Qtd de votos'
 FROM 
     votes v 
 JOIN 
     regions r ON v.id_region = r.region_id
-WHERE 
-    v.vote_count = (SELECT MAX(vote_count) FROM votes);
+GROUP BY
+    r.region_name
+ORDER BY 
+    r.region_name DESC LIMIT 1;
     
 /* Candidato com o maior número de votos */
 SELECT 
     candidate_name AS 'Candidato',
-    vote_count AS 'Qtd de votos'
+    MAX(vote_count) AS 'Qtd de votos'
 FROM 
     votes v
 JOIN
     candidates c ON v.id_candidate = c.candidate_id
-WHERE 
-    v.vote_count = (SELECT MAX(vote_count) FROM votes);
+GROUP BY
+    c.candidate_name
+ORDER BY
+    c.candidate_name DESC LIMIT 1;
   
 /* Candidatos com mais de 500 votos */
 SELECT 
@@ -122,7 +125,7 @@ JOIN
 JOIN 
     regions r ON v.id_region = r.region_id
 ORDER BY 
-    region_name, candidate_name;
+    r.region_name, v.vote_count DESC;
 
 /* Crie mais duas consultas que façam uso das funções(min, max, AVG, etc) e do group by usando having. */
 
@@ -149,13 +152,13 @@ ORDER BY
 /* segunda consulta */
 SELECT 
     candidate_name AS 'Candidato',
-    MIN(v.vote_count) AS 'Mínimo',
-    MAX(v.vote_count) AS 'Máximo',
-    AVG(v.vote_count) AS 'Média',
-    SUM(v.vote_count) AS 'Total'
+    MIN(vote_count) AS 'Mínimo',
+    MAX(vote_count) AS 'Máximo',
+    AVG(vote_count) AS 'Média',
+    SUM(vote_count) AS 'Total'
 FROM 
     votes v
-INNER JOIN 
+JOIN 
     candidates c ON v.id_candidate = c.candidate_id
 GROUP BY 
     c.candidate_name;
