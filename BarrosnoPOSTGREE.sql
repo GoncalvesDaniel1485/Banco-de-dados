@@ -91,7 +91,7 @@ ORDER BY
     
 /* Candidato com o maior número de votos */
 SELECT 
-    candidate_name AS "5.Candidato",
+    candidate_name AS "5.Candidato",   /* Tá dando erro no postgree */
     vote_count AS "Qtd de votos"
 FROM 
     votes v
