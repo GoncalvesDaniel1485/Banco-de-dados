@@ -91,7 +91,7 @@ ORDER BY
     
 /* Candidato com o maior número de votos */
 SELECT 
-    candidate_name AS "5.Candidato",   /* Tá dando erro no postgree */
+    candidate_name AS "5.Candidato",   
     vote_count AS "Qtd de votos"
 FROM 
     votes v
@@ -109,7 +109,7 @@ FROM
 JOIN 
     candidates c ON v.id_candidate = c.candidate_id
 WHERE 
-    v.vote_count HAVING vote_count > 500
+    v.vote_count HAVING vote_count > 500    /* Tá dando erro no postgree */
 ORDER BY 
     v.vote_count DESC; 
 
