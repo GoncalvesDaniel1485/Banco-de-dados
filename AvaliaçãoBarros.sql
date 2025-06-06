@@ -49,8 +49,9 @@ SELECT
 FROM 
     votes v JOIN candidates c ON v.id_candidate = c.candidate_id
 GROUP BY 
-    candidate_id;
-
+    c.candidate_name
+ORDER BY c.candidate_name DESC;
+    
 /* média de votos por região */
 SELECT 
     region_name AS 'Nome da região',
