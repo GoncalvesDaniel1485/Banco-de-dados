@@ -1,0 +1,92 @@
+CREATE TABLE cliente(
+  CodCli INT PRIMARY KEY,
+  Nome VARCHAR(50),
+  Tel CHAR(10),
+  CPF NUMERIC(11),
+  EMAIL VARCHAR(50)
+);
+
+CREATE TABLE vendedor(
+  CodVdd INT PRIMARY KEY,
+  CPF NUMERIC(11),
+  V_comissão NUMERIC(4,2),
+  Nome VARCHAR(50),
+  Endereco VARCHAR(100)
+);
+  
+CREATE TABLE produto(
+  CodPro INT PRIMARY KEY,
+  Custo NUMERIC(11,2),
+  Descrição TEXT,
+  Preco NUMERIC(11,2),
+  Nome VARCHAR(50)
+);
+CREATE table motorista(
+  CodMot INT PRIMARY KEY,
+  CPF NUMERIC(11),
+  CNH NUMERIC(10),
+  Nome VARCHAR(50),
+  Endereco VARCHAR(100)
+);
+
+CREATE TABLE veiculo(
+  Placa CHAR(7) PRIMARY KEY,
+  Capacidade INT
+);
+
+CREATE TABLE venda(
+  NumVen INT PRIMARY KEY,
+  Valor_Total NUMERIC(11,2),
+  CodVdd INT,
+  CodCli INT,
+  FOREIGN KEY(CodVdd) REFERENCES vendedor(CodVdd),
+  FOREIGN KEY(CodCli) REFERENCES cliente(CodCli)
+);
+
+CREATE TABLE Item_Venda(
+  CodPro INT,
+  NumVen INT,
+  vUnitario NUMERIC(11,2),
+  Qtd INT,
+  FOREIGN KEY(CodPro) REFERENCES produto(CodPro),
+  FOREIGN KEY(NumVen) REFERENCES venda(NumVen)
+);
+
+CREATE TABLE Entrega(
+  Hora TIME,
+  Data DATE,
+  NumVen INT,
+  Placa CHAR(7),
+  CodMot INT,
+  PRIMARY KEY(Hora, Data),
+  FOREIGN KEY(NumVen) REFERENCES venda(NumVen),
+  FOREIGN KEY(Placa) REFERENCES veiculo(Placa),
+  FOREIGN KEY(CodMot) REFERENCES motorista(CodMot)
+);
+
+INSERT INTO cliente
+Values(69, 'Roberval', 1002892269, 12345678901, 'Robervalgato@gmail.com'),
+      (34, 'Irineu', 1032875412, 99882134912, 'NemEu@academico.ipfb.edu.br'),
+      (43, 'Pilgrim', 1256894730, 78596412035, 'V4NGE4NC3@hotmail.com');
+
+INSERT INTO vendedor
+Values(1, 35378104297, 82.25, 'Abaduh', 'Rua da roda'),
+      (2, 23582102890, 80.82, 'Malthael', 'Calçamento sem calçada'),
+      (3, 12904117218, 85.63, 'Jeeves', 'Azeroth');
+
+INSERT INTO produto
+VAlUES(1000, 750.00, 'Material de voo', 2750.00, 'Drone'),
+      (1001, 2500.00, 'Alto desempenho em jogos', 8499.99, 'Pc gamer'),
+      (1002, 150.00, 'Design ergonômico', 399.99, 'Teclado gamer');
+
+INSERT INTO motorista
+VALUES(4002, 18546912374, 8936598767, 'Sec Estro', 'Rua da Boia'),
+      (4003, 12446997074, 2345680190, 'Jonaro', 'Jojo Street'),
+      (4004, 18549123074, 1489358767, 'Entrano Karro', 'Avenida Japa');
+
+INSERT INTO veiculo
+VALUES('IGU2025', 4),
+      ('P2I1C4A', 4),
+      ('z00000m', 6);
+
+SELECT * FROM veiculo;
