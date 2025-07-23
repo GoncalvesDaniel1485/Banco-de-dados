@@ -75,9 +75,9 @@ Values(1, 35378104297, 82.25, 'Abaduh', 'Rua da roda'),
       (3, 12904117218, 85.63, 'Jeeves', 'Azeroth');
 
 INSERT INTO produto
-VAlUES(1000, 750.00, 'Material de voo', 2750.00, 'Drone'),
-      (1001, 2500.00, 'Alto desempenho em jogos', 8499.99, 'Pc gamer'),
-      (1002, 150.00, 'Design ergonômico', 399.99, 'Teclado gamer');
+VAlUES(1000, 750.00, 'Armazenamento com LED', 2750.00, 'Guarda-roupa gamer'),
+      (1001, 200.00, 'Alto conforto em jogos', 449.99, 'Cadeira gamer'),
+      (1002, 150.00, 'Design ergonômico com LED', 599.99, 'Mesa gamer');
 
 INSERT INTO motorista
 VALUES(4002, 18546912374, 8936598767, 'Sec Estro', 'Rua da Boia'),
@@ -87,6 +87,24 @@ VALUES(4002, 18546912374, 8936598767, 'Sec Estro', 'Rua da Boia'),
 INSERT INTO veiculo
 VALUES('IGU2025', 4),
       ('P2I1C4A', 4),
-      ('z00000m', 6);
+      ('Z00000M', 6);
+      
+INSERT INTO venda
+VALUES(12345, 1500.00, 1, 43),
+      (12346, 3800.00, 2, 69),
+      (12347, 2750.00, 3, 34);
+      
+INSERT INTO Item_Venda
+VALUES(1000, 12346, 2750.00, 1),
+      (1001, 12346, 449.99, 1),
+      (1002, 12346, 599.99, 1),
+      (1000, 12347, 2750.00, 1),
+      (1001, 12345, 449.99, 2),
+      (1002, 12345, 599.99, 1);
 
-SELECT * FROM veiculo;
+      
+INSERT INTO Entrega
+VALUES('16:04:00', '07-22-2025', 12345, 'IGU2025', 4002),
+('09:45:00', '08-14-2025', 12346, 'P2I1C4A', 4003),
+('12:34:00', '04-25-2025', 12347, 'Z00000M', 4004);
+SELECT * FROM Item_Venda ORDER BY NumVen
