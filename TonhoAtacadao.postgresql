@@ -67,7 +67,8 @@ CREATE TABLE Entrega(
 INSERT INTO cliente
 Values(69, 'Roberval', 1002892269, 12345678901, 'Robervalgato@gmail.com'),
       (34, 'Irineu', 1032875412, 99882134912, 'NemEu@academico.ipfb.edu.br'),
-      (43, 'Pilgrim', 1256894730, 78596412035, 'V4NGE4NC3@hotmail.com');
+      (43, 'Pilgrim', 1256894730, 78596412035, 'V4NGE4NC3@hotmail.com'),
+      (00, NULL, NULL, NULL, 'testecopae@academico.ipfb.edu.br');
 
 INSERT INTO vendedor
 Values(1, 35378104297, 82.25, 'Abaduh', 'Rua da roda'),
@@ -95,15 +96,16 @@ INSERT INTO venda
 VALUES(12345, 1500.00, 1, 43),
       (12346, 3800.00, 2, 69),
       (12347, 2750.00, 3, 34),
-      (12348, 3000, NULL, NULL);
+      (12348, 3000, NULL, 00);
       
 INSERT INTO Item_Venda
 VALUES(1000, 12346, 2750.00, 1),
-      (1001, 12346, 449.99, 1),
+      (1001, 12346, 449.99, 5),
       (1002, 12346, 599.99, 1),
-      (1000, 12347, 2750.00, 1),
+      (1000, 12347, 2750.00, 1000),
       (1001, 12345, 449.99, 2),
-      (1002, 12345, 599.99, 1);
+      (1002, 12345, 599.99, 1),
+      (1002, 12348, 1000.00, 1);
 
 INSERT INTO Entrega
 VALUES('16:04:00', '07-22-2025', 12345, 'IGU2025', 4002),
@@ -114,7 +116,7 @@ SELECT iv.NumVen AS "Número da venda", p.NomeP AS "Produto", c.NomeC AS "Client
 FROM Item_Venda iv
 JOIN venda v ON iv.NumVen = v.NumVen
 JOIN produto p ON iv.CodPro = p.CodPro
-JOIN cliente c ON v.CodCli = c.CodCli;
+FULL JOIN cliente c ON v.CodCli = c.CodCli;
 
 SELECT e.NumVen AS "N° venda", c.NomeC AS "Cliente", m.NomeT AS "Entregador"
 FROM Entrega e
@@ -160,10 +162,10 @@ SELECT v.NumVen, v.Valor_Total, v.CodCli, ve.CodVdd, ve.NomeV
 FROM venda v
 FULL JOIN vendedor ve ON v.CodVdd = ve.CodVdd;
 
-SELECT c.NomeC AS "Cliente", SUM(Iv.vUnitario * Iv.Qtd) AS "Valor_Total_Compra"
+SELECT c.NomeC AS "Cliente", SUM(Iv.vUnitario * Iv.Qtd) AS "Valor_Total_Gasto"
 FROM Item_Venda Iv
-RIGHT JOIN venda v ON iv.NumVen = v.NumVen
-RIGHT JOIN produto p ON iv.CodPro = p.CodPro
-RIGHT JOIN cliente c ON v.CodCli = c.CodCli
+JOIN venda v ON iv.NumVen = v.NumVen
+JOIN produto p ON iv.CodPro = p.CodPro
+JOIN cliente c ON v.CodCli = c.CodCli
 GROUP BY c.NomeC
 ORDER BY SUM(Iv.vUnitario * Iv.Qtd) DESC;
