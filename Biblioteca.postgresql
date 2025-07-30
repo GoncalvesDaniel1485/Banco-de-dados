@@ -1,0 +1,196 @@
+CREATE TABLE alunos (
+    id INT PRIMARY KEY,
+    nome VARCHAR(100),
+    curso VARCHAR(100)
+);
+
+CREATE TABLE livros (
+    id INT PRIMARY KEY,
+    titulo VARCHAR(150),
+    autor VARCHAR(100),
+    categoria VARCHAR(50)
+);
+
+CREATE TABLE emprestimos (
+    id INT PRIMARY KEY,
+    aluno_id INT,
+    livro_id INT,
+    data_emprestimo DATE,
+    data_devolucao DATE,
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id),
+    FOREIGN KEY (livro_id) REFERENCES livros(id)
+);
+
+-- Inserção de alunos
+INSERT INTO alunos (id, nome, curso) 
+VALUES
+(1, 'Takamassa Nomuro', 'Edificações'),
+(2, 'Brua Dor', 'Direito'),
+(3, 'Dô Tô', 'Medicina'),
+(4, 'Banel Louza', 'Administração'),
+(5, 'Rabarto Albina', 'Ciência da Computação'),
+(6, 'Alaric de Vallen', 'Edificações'),
+(7, 'Serena of Dorne', 'Direito'),
+(8, 'Gareth Ironhand', 'Medicina'),
+(9, 'Elric Stormborn', 'Administração'),
+(10, 'Rowena Blackthorn', 'Ciência da Computação'),
+(11, 'Cedric Ravenshade', 'Edificações'),
+(12, 'Isolde Fairwyn', 'Direito'),
+(13, 'Thorne Wyvernbane', 'Medicina'),
+(14, 'Merek of Eldwyn', 'Administração'),
+(15, 'Lyanna Silvermere', 'Ciência da Computação'),
+(16, 'Wulfric Ironhelm', 'Edificações'),
+(17, 'Helena of EastOri', 'História'),
+(18, 'Darian Greycloak', 'Medicina'),
+(19, 'Leoric Ashenford', 'Administração'),
+(20, 'Sybilla Moorheart', 'Ciência da Computação');
+
+-- Inserção de livros
+INSERT INTO livros (id, titulo, autor, categoria) 
+VALUES
+(1, 'O Anel dos Senhores', 'neiklot .R.R.J', 'Fantasia'),
+(2, 'Com Dosmurro', 'Anderson Silva', 'Luta'),
+(3, '2025', 'Chat GPT', 'Ficção Científica'),
+(4, 'A Arte da Guerra', 'Sun Tzu', 'Estratégia'),
+(5, 'O Pequeno Pedro', 'Hális', 'Adulto'),
+(6, 'Potter Yrrah e os Animais Especiais', 'K.J. Rolando', 'Fantasia'),
+(7, 'Humor Negro', 'Léo Lins', 'Comédia'),
+(8, 'O Código De Barros', 'P. OO', 'Terror'),
+(9, 'A Evolução dos Macacos', 'Tonho Gonho', 'Mito'),
+(10, 'Capitão Afeganistão', 'Nosé Jeto', 'Comédia');
+
+INSERT INTO emprestimos (id, aluno_id, livro_id, data_emprestimo, data_devolucao) 
+VALUES
+(1, 1, 1, '2025-07-01', '2025-07-10'),
+
+(2, 2, 8, '2000-07-05', NULL), 
+(3, 2, 3, '2025-07-10', NULL), 
+(4, 2, 8, '2025-07-15', NULL),
+(5, 2, 5, '2025-07-02', '2025-07-12'), 
+(6, 2, 8, '2025-07-07', '2025-07-17'),
+(7, 2, 7, '2025-07-12', NULL),
+(8, 2, 8, '2025-07-17', NULL), 
+(9, 2, 7, '2025-07-03', '2025-07-13'), 
+(10, 3, 10, '2025-07-08', '2025-07-18'), 
+(11, 3, 1, '2025-07-13', NULL), 
+(12, 3, 2, '2025-07-18', NULL),
+(13, 4, 3, '2025-07-04', '2025-07-14'), 
+(14, 4, 5, '2025-07-09', '2025-07-19'),
+(15, 5, 8, '2025-07-14', NULL), 
+(16, 5, 6, '2025-07-19', NULL), 
+(17, 5, 7, '2025-07-05', '2025-07-15'),
+(18, 5, 3, '2025-07-10', '2025-07-20'), 
+(19, 5, 9, '2025-07-15', NULL), 
+(20, 5, 10, '2025-07-20', NULL),
+(21, 7, 3, '2025-07-04', '2025-07-14'),
+(22, 6, 5, '2025-07-09', '2025-07-19'),
+(23, 8, 7, '2000-07-05', NULL), 
+(24, 8, 3, '2025-07-10', NULL), 
+(25, 8, 4, '2025-07-15', NULL),
+(26, 5, 7, '2025-07-02', '2025-07-12'), 
+(27, 6, 8, '2025-07-07', '2025-07-17'),
+(28, 7, 7, '2025-07-12', NULL),
+(29, 8, 9, '2025-07-17', NULL), 
+(30, 11, 7, '2025-07-03', '2025-07-13'),
+(31, 12, 8, '2000-07-05', NULL),
+(32, 12, 3, '2025-07-10', NULL),
+(33, 13, 8, '2025-07-15', NULL),
+(34, 15, 5, '2025-07-02', '2025-07-12'), 
+(35, 14, 8, '2025-07-07', '2025-07-17'), 
+(36, 17, 7, '2025-07-12', NULL),
+(37, 18, 8, '2025-07-17', NULL), 
+(38, 19, 7, '2025-07-03', '2025-07-13'),
+(39, 20, 1, '2025-07-01', '2025-07-10'),
+(40, 20, 8, '2000-07-05', NULL), 
+(41, 16, 3, '2025-07-10', NULL), 
+(42, 14, 8, '2025-07-15', NULL),
+(43, 12, 5, '2025-07-02', '2025-07-12'), 
+(44, 11, 8, '2025-07-07', '2025-07-17'), 
+(45, 13, 7, '2025-07-12', NULL),
+(46, 6, 8, '2025-07-17', NULL), 
+(47, 7, 7, '2025-07-03', '2025-07-13'), 
+(48, 8, 10, '2025-07-08', '2025-07-18'),
+(49, 4, 1, '2025-07-13', NULL), 
+(50, 5, 2, '2025-07-18', NULL),
+(51, 9, 3, '2025-07-04', '2025-07-14'), 
+(52, 10, 5, '2025-07-09', '2025-07-19'),
+(53, 10, 8, '2025-07-14', NULL), 
+(54, 15, 6, '2025-07-19', NULL), 
+(55, 16, 7, '2025-07-05', '2025-07-15'),
+(56, 17, 3, '2025-07-10', '2025-07-20'), 
+(57, 18, 9, '2025-07-15', NULL), 
+(58, 19, 10, '2025-07-20', NULL),
+(59, 20, 3, '2025-07-04', '2025-07-14'), 
+(60, 11, 5, '2025-07-09', '2025-07-19'),
+(61, 11, 7, '2000-07-05', NULL), 
+(62, 12, 3, '2025-07-10', NULL),
+(63, 20, 8, '2025-07-15', NULL),
+(64, 20, 7, '2025-07-02', '2025-07-12'), 
+(65, 14, 8, '2025-07-07', '2025-07-17'), 
+(66, 13, 7, '2025-07-12', NULL),
+(67, 14, 9, '2025-07-17', NULL), 
+(68, 15, 7, '2025-07-03', '2025-07-13'),
+(69, 16, 8, '2000-07-05', NULL), 
+(70, 17, 3, '2025-07-10', NULL), 
+(71, 18, 8, '2025-07-15', NULL),
+(72, 17, 5, '2025-07-02', '2025-07-12'), 
+(73, 19, 8, '2025-07-07', '2025-07-17'), 
+(74, 9, 7, '2025-07-12', NULL),
+(75, 19, 8, '2025-07-17', NULL), 
+(76, 10, 7, '2025-07-03', '2025-07-13');
+
+Select a.nome AS "Aluno", COUNT(e.id) AS "Emprestimos"
+FROM emprestimos e
+JOIN alunos a ON a.id = e.aluno_id
+GROUP BY a.nome
+ORDER BY COUNT(e.id) DESC;
+
+Select l.titulo, COUNT(e.id)
+FROM emprestimos e 
+JOIN livros l ON e.livro_id = l.id
+GROUP BY l.titulo
+ORDER BY COUNT(e.id) DESC;
+
+Select a.curso, COUNT(e.id)
+FROM emprestimos e
+JOIN alunos a ON a.id = e.aluno_id
+GROUP BY a.curso
+ORDER BY COUNT(e.id) DESC;
+
+Select a.nome AS "Aluno", COUNT(e.id) AS "Emprestimos"
+FROM emprestimos e
+JOIN alunos a ON a.id = e.aluno_id
+GROUP BY a.nome
+ORDER BY COUNT(e.id) DESC LIMIT 1;
+
+SELECT COUNT(l.titulo) AS "Quantidade", l.titulo AS "Título das cópias", e.data_devolucao
+FROM livros l 
+JOIN emprestimos e ON l.id = e.livro_id
+WHERE data_devolucao IS null
+GROUP BY l.titulo, e.data_devolucao;
+
+
+
+
+
+/*Liste o nome dos alunos e a quantidade total de livros que cada um pegou emprestado.
+
+
+Liste os livros mais emprestados (exibir o título e o número de vezes que foi emprestado), ordenando do mais para o menos emprestado.
+
+
+Para cada curso, exiba a quantidade total de livros emprestados por seus alunos.
+
+
+Encontre o aluno que mais emprestou livros.
+
+
+Liste os livros que ainda não foram devolvidos (data_devolucao é NULL).
+
+
+Exiba a média de livros emprestados por aluno.
+
+
+Liste as categorias de livros mais populares (baseando-se na quantidade de empréstimos).
+
+*/
