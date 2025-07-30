@@ -159,3 +159,11 @@ FULL JOIN vendedor ve ON vd.CodVdd = ve.CodVdd;
 SELECT v.NumVen, v.Valor_Total, v.CodCli, ve.CodVdd, ve.NomeV
 FROM venda v
 FULL JOIN vendedor ve ON v.CodVdd = ve.CodVdd;
+
+SELECT c.NomeC AS "Cliente", SUM(Iv.vUnitario * Iv.Qtd) AS "Valor_Total_Compra"
+FROM Item_Venda Iv
+RIGHT JOIN venda v ON iv.NumVen = v.NumVen
+RIGHT JOIN produto p ON iv.CodPro = p.CodPro
+RIGHT JOIN cliente c ON v.CodCli = c.CodCli
+GROUP BY c.NomeC
+ORDER BY SUM(Iv.vUnitario * Iv.Qtd) DESC;
