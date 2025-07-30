@@ -167,7 +167,10 @@ SELECT COUNT(l.titulo) AS "Quantidade", l.titulo AS "Título das cópias", e.dat
 FROM livros l 
 JOIN emprestimos e ON l.id = e.livro_id
 WHERE data_devolucao IS null
-GROUP BY l.titulo, e.data_devolucao;
+GROUP BY l.titulo, e.data_devolucao
+ORDER BY COUNT(l.titulo) DESC;
+
+
 
 
 
