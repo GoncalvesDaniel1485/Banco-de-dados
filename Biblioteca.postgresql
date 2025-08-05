@@ -170,7 +170,11 @@ WHERE data_devolucao IS null
 GROUP BY l.titulo, e.data_devolucao
 ORDER BY COUNT(l.titulo) DESC;
 
-
+SELECT 
+FROM livros l
+JOIN emprestimos e ON l.id = e.livro_id
+JOIN alunos a ON e.aluno_id = a.id
+GROUP BY a.nome;
 
 
 
