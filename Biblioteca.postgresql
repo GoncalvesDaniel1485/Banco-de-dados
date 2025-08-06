@@ -170,15 +170,14 @@ WHERE data_devolucao IS null
 GROUP BY l.titulo, e.data_devolucao
 ORDER BY COUNT(l.titulo) DESC;
 
-SELECT 
-FROM livros l
-JOIN emprestimos e ON l.id = e.livro_id
-JOIN alunos a ON e.aluno_id = a.id
-GROUP BY a.nome;
+SELECT COUNT(livro_id) / COUNT(DISTINCT aluno_id) AS "Média de livros emprestados por aluno"
+FROM emprestimos;
 
-
-
-
+SELECT COUNT(DISTINCT e.id) as "id", l.categoria
+FROM emprestimos e
+JOIN livros l ON e.livro_id = l.id
+GROUP BY l.categoria
+ORDER BY "id" DESC;
 
 /*Liste o nome dos alunos e a quantidade total de livros que cada um pegou emprestado.
 
@@ -195,7 +194,7 @@ Encontre o aluno que mais emprestou livros.
 Liste os livros que ainda não foram devolvidos (data_devolucao é NULL).
 
 
-Exiba a média de livros emprestados por aluno.
+Exiba a média de livros emprestados por aluno. 
 
 
 Liste as categorias de livros mais populares (baseando-se na quantidade de empréstimos).
