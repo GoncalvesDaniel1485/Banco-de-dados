@@ -1,0 +1,109 @@
+CREATE TABLE Cliente (
+    id_cliente SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    telefone VARCHAR(20),
+    email VARCHAR(100)
+);
+
+
+CREATE TABLE Veiculo (
+    id_veiculo SERIAL PRIMARY KEY,
+    modelo VARCHAR(100) NOT NULL,
+    marca VARCHAR(50),
+    ano INT,
+    categoria VARCHAR(50), -- SUV, Sedan, Hatch, etc.
+    preco_diaria NUMERIC(10,2),
+    disponivel BOOLEAN DEFAULT TRUE
+);
+
+
+CREATE TABLE Aluguel (
+    id_aluguel SERIAL PRIMARY KEY,
+    id_cliente INT REFERENCES Cliente(id_cliente),
+    id_veiculo INT REFERENCES Veiculo(id_veiculo),
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    valor_total NUMERIC(10,2)
+);
+
+INSERT INTO Cliente
+VALUES(1, 'Roberto', '171.942.182-21', '(83)98712-4022', 'Roberto@gmail.com'),
+(2, 'Gabriel', '123.521.215-25', '(55)18920-8912', 'Gaybriel@hotmail.com'),
+(3, 'Kamyla', '183.961.345-17', '(83)98625-8000', 'Felix.Kamyla@academico.ifpb.edu.br'),
+(4, 'Luismar', '202.169.192-18', '(83)98613-8560', 'Luismar@gmail.com'),
+(5, 'Robson', '811.619.167-19', '(13)98616-7850', 'Robson@gmail.com'),
+(6, 'Ronaldo', '381.196.124-22', '(44)98690-2021', 'Ronaldo@hotmail.com'),
+(7, 'Antônio', '111.222.333-45', '(15)98786-5000', 'Gonho@gmail.com');
+
+INSERT INTO Veiculo
+VALUES(10, 'V8', 'Toyota', 2015, 'SUV', 500.00, TRUE),
+(11, 'V8', 'Chevrolet', 2016, 'Esportivo', 1800.00, TRUE),
+(12, 'V12', 'Pagani', 2010, 'Esportivo', 9000.00, TRUE),
+(13, 'Towner Furg', 'HAFEI', 2007, 'Van', 30.00, TRUE),
+(14, 'Diesel', 'Asia Motors', 1993, 'Van', 25.00, TRUE),
+(15, '16V', 'Alfa Romeo', 1999, 'Sedan', 100.00, TRUE),
+(16, '16V', 'Nissan', 2007, 'SUV', 140.00, TRUE),
+(17, 'V6', 'Nissan', 2016, 'Esportivo', 3500.00, TRUE);
+
+
+INSERT INTO Aluguel
+VALUES(100, 2, 11, '10-22-2018', '11-22-2018', 270000.00),
+(101, 3, 10, '09-11-2016', '10-11-2016', 15000.00),
+(102, 1, 12, '01-02-2011', '01-02-2012', 3285000.00),
+(103, 4, 16, '01-03-2010', '01-10-2010', 980.00),
+(104, 6, 14, '03-05-2000', '03-07-2000', 50.00),
+(105, 5, 17, '03-07-2018', '04-08-2018', 108500.00);
+
+/*
+
+Liste os 5 clientes que mais gastaram em aluguéis.
+
+Calcule a média de valor dos aluguéis por cliente.
+
+Liste o faturamento total por mês (ano/mês e soma de valor_total).
+
+Mostre: nome do cliente, modelo do veículo, período do aluguel e valor_total.
+
+Mostre o faturamento total por categoria de veículo.
+
+Liste os clientes que já gastaram mais de R$ 5000,00 em aluguéis.
+
+Mostre os 3 veículos mais alugados.
+*/
+
+SELECT c.nome, v.modelo /*Tabela 1*/
+FROM Aluguel a
+JOIN Cliente c ON a.id_cliente = c.id_cliente
+JOIN Veiculo v ON a.id_veiculo = v.id_veiculo;
+
+SELECT c.nome, v.modelo, a.valor_total /*Tabela 2*/
+FROM Aluguel a
+JOIN Cliente c ON a.id_cliente = c.id_cliente
+JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
+WHERE valor_total > 1000
+ORDER BY valor_total DESC;
+
+SELECT v.marca, v.ano, v.categoria /*Tabela 3*/
+FROM Veiculo v
+LEFT JOIN Aluguel a ON v.id_veiculo = a.id_veiculo
+WHERE a.id_veiculo IS NULL;
+
+SELECT c.nome, c.email /*Tabela 4*/
+FROM Aluguel a
+JOIN Cliente c ON a.id_cliente = c.id_cliente
+JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
+WHERE v.categoria = 'SUV';
+
+SELECT SUM(a.valor_total) AS "Valor Total de Alguéis" /*Tabela 5*/
+FROM Aluguel a;
+
+SELECT COUNT(v.categoria) AS "Aluguel", v.categoria /*Tabela 6*/
+FROM Aluguel a
+JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
+GROUP BY v.categoria;
+
+SELECT c.nome, a.valor_total /*Tabela 7*/
+FROM Aluguel a
+JOIN Cliente c ON a.id_cliente = c.id_cliente
+ORDER BY a.valor_total DESC LIMIT 5;
