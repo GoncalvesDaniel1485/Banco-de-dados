@@ -58,23 +58,6 @@ VALUES(100, 2, 11, '10-22-2018', '11-22-2018', 540000.00),
 (107, 3, 17, '09-11-2016', '10-11-2016', 15000.00),
 (108, 1, 12, '01-02-2013', '01-02-2015', 6570000.00);
 
-/*
-
-Liste os 5 clientes que mais gastaram em aluguéis.
-
-Calcule a média de valor dos aluguéis por cliente.
-
-Liste o faturamento total por mês (ano/mês e soma de valor_total).
-
-Mostre: nome do cliente, modelo do veículo, período do aluguel e valor_total.
-
-Mostre o faturamento total por categoria de veículo.
-
-Liste os clientes que já gastaram mais de R$ 5000,00 em aluguéis.
-
-Mostre os 3 veículos mais alugados.
-*/
-
 SELECT c.nome, v.modelo /*Tabela 1*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
