@@ -58,73 +58,78 @@ VALUES(100, 2, 11, '10-22-2018', '11-22-2018', 540000.00),
 (107, 3, 17, '09-11-2016', '10-11-2016', 15000.00),
 (108, 1, 12, '01-02-2013', '01-02-2015', 6570000.00);
 
-SELECT c.nome, v.modelo /*Tabela 1*/
+SELECT c.nome, v.modelo /*query 1*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo;
 
-SELECT c.nome, v.modelo, a.valor_total /*Tabela 2*/
+SELECT c.nome, v.modelo, a.valor_total /*query 2*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
 WHERE valor_total > 1000
 ORDER BY valor_total DESC;
 
-SELECT v.marca, v.ano, v.categoria /*Tabela 3*/
+SELECT v.marca, v.ano, v.categoria /*query 3*/
 FROM Veiculo v
 LEFT JOIN Aluguel a ON v.id_veiculo = a.id_veiculo
 WHERE a.id_veiculo IS NULL;
 
-SELECT c.nome, c.email /*Tabela 4*/
+SELECT c.nome, c.email /*query 4*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
 WHERE v.categoria = 'SUV'
 GROUP BY c.nome, c.email;
 
-SELECT SUM(a.valor_total) AS "Valor Total de Alguéis" /*Tabela 5*/
+SELECT SUM(a.valor_total) AS "Valor Total de Alguéis" /*query 5*/
 FROM Aluguel a;
 
-SELECT COUNT(v.categoria) AS "Aluguel", v.categoria /*Tabela 6*/
+SELECT COUNT(v.categoria) AS "Aluguel", v.categoria /*query 6*/
 FROM Aluguel a
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
 GROUP BY v.categoria;
 
-SELECT c.nome, SUM(a.valor_total) AS "Total" /*Tabela 7*/
+SELECT c.nome, SUM(a.valor_total) AS "Total" /*query 7*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
 GROUP BY c.nome
 ORDER BY "Total" DESC LIMIT 5;
 
-SELECT c.nome, AVG(a.valor_total) AS "Média" /*Tabela 8*/
+SELECT c.nome, AVG(a.valor_total) AS "Média" /*query 8*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
-GROUP BY c.nome;
+GROUP BY c.nome
+ORDER BY "Média" DESC;
 
-SELECT a.data_inicio, a.data_fim, SUM(valor_total) AS "Não tenho ideia de como fazer"
+SELECT 
+    EXTRACT(YEAR FROM a.data_fim) AS ano,  /*query 9*/
+    EXTRACT(MONTH FROM a.data_fim) AS mes,
+    SUM(a.valor_total) AS faturamento
 FROM Aluguel a
-GROUP BY a.data_inicio, a.data_fim
-ORDER BY "Não tenho ideia de como fazer" DESC;
+GROUP BY EXTRACT(YEAR FROM a.data_fim), EXTRACT(MONTH FROM a.data_fim)
+ORDER BY ano, mes;
 
 SELECT c.nome, v.modelo, (a.data_fim - a.data_inicio) AS "Período Aluguel", (a.valor_total)
 FROM Aluguel a /*Tabela 10*/
 JOIN Cliente c ON a.id_cliente = c.id_cliente
-JOIN Veiculo v ON a.id_veiculo = v.id_veiculo;
+JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
+ORDER BY a.valor_total DESC;
 
-SELECT v.categoria, SUM(a.valor_total) AS "faturamento"  /*Tabela 11*/
+SELECT v.categoria, SUM(a.valor_total) AS "faturamento"  /*query 11*/
 FROM Aluguel a
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
 GROUP BY v.categoria
 ORDER BY faturamento DESC;
 
-SELECT c.nome, SUM(a.valor_total) AS "Total"/*Tabela 12*/
+SELECT c.nome, SUM(a.valor_total) AS "Total"/*query 12*/
 FROM Aluguel a
 JOIN Cliente c ON a.id_cliente = c.id_cliente
 WHERE a.valor_total >= 5000
 GROUP BY c.nome
 ORDER BY "Total" DESC;
 
-SELECT COUNT(a.id_veiculo) AS "Quantidade de vezes alugado", a.id_veiculo /*Tabela 13*/
+SELECT COUNT(a.id_veiculo) AS "Quantidade de vezes alugado", a.id_veiculo /*query 13*/
 FROM Aluguel a
 JOIN Veiculo v ON a.id_veiculo = v.id_veiculo
 GROUP BY a.id_veiculo
