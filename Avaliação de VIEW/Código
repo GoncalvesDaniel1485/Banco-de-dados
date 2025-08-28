@@ -116,8 +116,8 @@ SELECT
     EXTRACT(MONTH FROM a.data_fim) AS mes,
     SUM(a.valor_total) AS faturamento
 FROM Aluguel a
-GROUP BY EXTRACT(YEAR FROM a.data_fim), EXTRACT(MONTH FROM a.data_fim)
-ORDER BY ano, mes;
+GROUP BY ano, mes
+ORDER BY ano;
 
 CREATE VIEW Banco_de_Dados AS
 SELECT c.nome, v.modelo, (a.data_fim - a.data_inicio) AS "Período Aluguel", (a.valor_total)
